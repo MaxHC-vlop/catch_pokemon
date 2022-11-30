@@ -47,7 +47,7 @@ def show_all_pokemons(request):
         pokemons_on_page.append({
             'pokemon_id': pokemon.id,
             'img_url': request.build_absolute_uri(pokemon.image.url),
-            'title_ru': pokemon.title,
+            'title_ru': pokemon.title_ru,
         })
 
     return render(request, 'mainpage.html', context={
@@ -74,7 +74,9 @@ def show_pokemon(request, pokemon_id):
         )
 
     pokemon_info = {
-        'title_ru': pokemon.title,
+        'title_ru': pokemon.title_ru,
+        'title_en': pokemon.title_en,
+        'title_jp': pokemon.title_jp,
         'img_url': pokemon_image,
         'description': pokemon.description
     }

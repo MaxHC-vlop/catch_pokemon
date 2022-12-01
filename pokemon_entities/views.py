@@ -1,4 +1,5 @@
 import folium
+import logging
 
 from django.shortcuts import render
 from .models import Pokemon
@@ -11,6 +12,9 @@ DEFAULT_IMAGE_URL = (
     '/latest/fixed-aspect-ratio-down/width/240/height/240?cb=20130525215832'
     '&fill=transparent'
 )
+
+LOGGER = logging.getLogger(__file__)
+logging.basicConfig(level=logging.ERROR)
 
 
 def add_pokemon(folium_map, lat, lon, image_url=DEFAULT_IMAGE_URL):
@@ -27,9 +31,13 @@ def add_pokemon(folium_map, lat, lon, image_url=DEFAULT_IMAGE_URL):
 
 
 def show_all_pokemons(request):
-    folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
-    pokemons = Pokemon.objects.all()
+    try:
+        pokemons = Pokemon.objects.all()
+    except Pokemon.DoesNotExist as error:
+        LOGGER.error(f'Pokemon not found: {error}')
+
     local_time = timezone.localtime()
+    folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
 
     for pokemon in pokemons:
         pokemon_coordinates = pokemon.entity.filter(
@@ -57,7 +65,11 @@ def show_all_pokemons(request):
 
 
 def show_pokemon(request, pokemon_id):
-    pokemon = Pokemon.objects.get(pk=pokemon_id)
+    try:
+        pokemon = Pokemon.objects.get(pk=pokemon_id)
+    except Pokemon.DoesNotExist as error:
+        LOGGER.error(f'Pokemon not found: {error}')
+
     local_time = timezone.localtime()
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
 
@@ -84,12 +96,12 @@ def show_pokemon(request, pokemon_id):
             'img_url': request.build_absolute_uri(pokemon_previous_evolution.image.url)
         }
     
-    pokemon_next_evolution = pokemon.next_evolutions.first()
-    if pokemon_next_evolution:
+    next_evolution = pokemon.next_evolutions.first()
+    if next_evolution:
         next_evolution = {
-                'pokemon_id': pokemon_next_evolution.id,
-                'title_ru': pokemon_next_evolution.title_ru,
-                'img_url': request.build_absolute_uri(pokemon_next_evolution.image.url)
+                'pokemon_id': next_evolution.id,
+                'title_ru': next_evolution.title_ru,
+                'img_url': request.build_absolute_uri(next_evolution.image.url)
                 }
     
     pokemon_info = {

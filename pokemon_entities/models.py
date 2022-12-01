@@ -36,31 +36,31 @@ class PokemonEntity(models.Model):
         verbose_name='Покемон', related_name='entity'
         )
     latitude = models.FloatField(
-        verbose_name='Широта'
+        verbose_name='Широта', blank=True
         )
     longitude = models.FloatField(
-        verbose_name='Долгота'
+        verbose_name='Долгота', blank=True
         )
     appeared_at = models.DateTimeField(
-        verbose_name='Появился', null=True
+        verbose_name='Появился', null=True, blank=True
         )
     disappeared_at = models.DateTimeField(
-        verbose_name='Исчез', null=True
+        verbose_name='Исчез', null=True, blank=True
         )
     level = models.IntegerField(
-        verbose_name='Уровень', null=True
+        verbose_name='Уровень', null=True, blank=True
         )
     health = models.IntegerField(
-        verbose_name='Здоровье', null=True
+        verbose_name='Здоровье', null=True, blank=True
         )
     attack = models.IntegerField(
-        verbose_name='Атака', null=True
+        verbose_name='Атака', null=True, blank=True
         )
     protection = models.IntegerField(
-        verbose_name='Защита', null=True
+        verbose_name='Защита', null=True, blank=True
         )
     endurance = models.IntegerField(
-        verbose_name='Выносливость', null=True
+        verbose_name='Выносливость', null=True, blank=True
         )
 
     def __str__(self):

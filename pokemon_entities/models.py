@@ -64,6 +64,4 @@ class PokemonEntity(models.Model):
         )
 
     def __str__(self):
-        pokemon = f'{self.pokemon.title_ru}'
-
-        return pokemon
+        return self.pokemon.title_ru

@@ -31,10 +31,7 @@ def add_pokemon(folium_map, lat, lon, image_url=DEFAULT_IMAGE_URL):
 
 
 def show_all_pokemons(request):
-    try:
-        pokemons = Pokemon.objects.all()
-    except Pokemon.DoesNotExist as error:
-        LOGGER.error(f'Pokemon not found: {error}')
+    pokemons = Pokemon.objects.all()
 
     local_time = timezone.localtime()
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
@@ -65,10 +62,7 @@ def show_all_pokemons(request):
 
 
 def show_pokemon(request, pokemon_id):
-    try:
-        pokemon = Pokemon.objects.get(pk=pokemon_id)
-    except Pokemon.DoesNotExist as error:
-        LOGGER.error(f'Pokemon not found: {error}')
+    pokemon = Pokemon.objects.get(pk=pokemon_id)
 
     local_time = timezone.localtime()
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)

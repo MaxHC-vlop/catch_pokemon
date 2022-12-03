@@ -4,6 +4,7 @@ import logging
 from django.shortcuts import render
 from .models import Pokemon
 from django.utils import timezone
+from django.shortcuts import get_list_or_404, get_object_or_404
 
 
 MOSCOW_CENTER = [55.751244, 37.618423]
@@ -31,12 +32,12 @@ def add_pokemon(folium_map, lat, lon, image_url=DEFAULT_IMAGE_URL):
 
 
 def show_all_pokemons(request):
-    pokemons = Pokemon.objects.all()
+    pokemons = get_list_or_404(Pokemon)
 
     local_time = timezone.localtime()
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
 
-    pokemon_coordinates = pokemon.entites.filter(
+    pokemon_coordinates = pokemons.entites.filter(
         appeared_at__lte=local_time,
         disappeared_at__gte=local_time)
 
@@ -62,7 +63,7 @@ def show_all_pokemons(request):
 
 
 def show_pokemon(request, pokemon_id):
-    pokemon = Pokemon.objects.get(pk=pokemon_id)
+    pokemon = get_object_or_404(Pokemon, id=pokemon_id)
 
     local_time = timezone.localtime()
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)

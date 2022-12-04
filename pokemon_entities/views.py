@@ -45,7 +45,7 @@ def show_all_pokemons(request):
         add_pokemon(
             folium_map, pokemon_entities.latitude,
             pokemon_entities.longitude,
-            request.build_absolute_uri(pokemon.image.url)
+            request.build_absolute_uri(pokemon_entities.image.url)
         )
 
     pokemons_on_page = []

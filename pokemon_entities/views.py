@@ -1,5 +1,4 @@
 import folium
-import logging
 
 from django.shortcuts import render
 from .models import Pokemon
@@ -13,9 +12,6 @@ DEFAULT_IMAGE_URL = (
     '/latest/fixed-aspect-ratio-down/width/240/height/240?cb=20130525215832'
     '&fill=transparent'
 )
-
-LOGGER = logging.getLogger(__file__)
-logging.basicConfig(level=logging.ERROR)
 
 
 def add_pokemon(folium_map, lat, lon, image_url=DEFAULT_IMAGE_URL):

@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
 import os
+import logging
 
 from dotenv import load_dotenv
 load_dotenv()
@@ -126,3 +127,6 @@ STATIC_URL = '/static/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 MEDIA_URL = '/media/'
+
+LOGGER = logging.getLogger(__file__)
+logging.basicConfig(level=logging.ERROR)

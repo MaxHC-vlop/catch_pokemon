@@ -37,14 +37,14 @@ def show_all_pokemons(request):
     local_time = timezone.localtime()
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
 
-    pokemon_coordinates = pokemons.entites.filter(
+    pokemon_coordinates = pokemons.entities.filter(
         appeared_at__lte=local_time,
         disappeared_at__gte=local_time)
 
-    for pokemon_entites in pokemon_coordinates:
+    for pokemon_entities in pokemon_coordinates:
         add_pokemon(
-            folium_map, pokemon_entites.latitude,
-            pokemon_entites.longitude,
+            folium_map, pokemon_entities.latitude,
+            pokemon_entities.longitude,
             request.build_absolute_uri(pokemon.image.url)
         )
 
@@ -68,15 +68,15 @@ def show_pokemon(request, pokemon_id):
     local_time = timezone.localtime()
     folium_map = folium.Map(location=MOSCOW_CENTER, zoom_start=12)
 
-    pokemon_coordinates = pokemon.entites.filter(
+    pokemon_coordinates = pokemon.entities.filter(
         appeared_at__lte=local_time,
         disappeared_at__gte=local_time)
     pokemon_image = request.build_absolute_uri(pokemon.image.url)
 
-    for pokemon_entites in pokemon_coordinates:
+    for pokemon_entities in pokemon_coordinates:
         add_pokemon(
-            folium_map, pokemon_entites.latitude,
-            pokemon_entites.longitude,
+            folium_map, pokemon_entities.latitude,
+            pokemon_entities.longitude,
             pokemon_image
         )
 
